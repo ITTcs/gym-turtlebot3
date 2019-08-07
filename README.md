@@ -3,6 +3,10 @@
 
 This is a gym env to work with the TurtleBot3 gazebo simulations, allowing the use of [OpenAI Baselines](https://github.com/openai/baselines) and [Stable Baselines](https://github.com/hill-a/stable-baselines) deep reinforcement learning algorithms in the robot navigation training. See the `examples` folder to check some Python programs.
 
+This project is a part of the development of some gazebo environments to apply deep-rl algorithms.
+
+[Research Gazebo environments for TurtleBot3 robot](https://github.com/ITTcs/turtlebot3_simulations)
+
 ## Installation
 
 ```
@@ -46,10 +50,6 @@ Before running a Python program you first need run the specified environment. To
 ```
 roslaunch turtlebot3_gazebo turtlebot3_circuit_simple.launch
 ```
-
-This project is a part of the development of some gazebo environments to apply deep-rl algorithms.
-
-[Research Gazebo environments for TurtleBot3 robot](https://github.com/ITTcs/turtlebot3_simulations)
 
 These resouces are part of a master's thesis where we use the Python [fuzzylab](https://github.com/ITTcs/fuzzylab) library to create fuzzy logic controllers with the implementation of deep reinforcement learning algorithms.
 
