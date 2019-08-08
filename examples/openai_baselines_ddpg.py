@@ -1,4 +1,3 @@
-import gym
 import gym_turtlebot3
 import rospy
 import baselines.run as run
