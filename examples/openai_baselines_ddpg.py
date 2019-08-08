@@ -9,8 +9,6 @@ num_timesteps = '1e4'
 
 name_ref = env_name + '_' + num_timesteps + '_' + alg
 
-rospy.init_node(env_name.replace('-', '_'))
-
 my_args = [
     '--alg=' + alg, 
     '--env=' + env_name, 
@@ -18,5 +16,7 @@ my_args = [
 
 os.environ["OPENAI_LOG_FORMAT"] = "csv"
 os.environ["OPENAI_LOGDIR"] = './logs/' + name_ref
+
+rospy.init_node(env_name.replace('-', '_'))
 
 run.main(my_args)
