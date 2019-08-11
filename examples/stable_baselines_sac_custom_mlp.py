@@ -9,8 +9,6 @@ from stable_baselines import SAC
 
 env_name = 'TurtleBot3_Circuit_Simple-v0'
 
-rospy.init_node(env_name.replace('-', '_'))
-
 # Custom MLP policy of two layers of size 128 each
 class CustomSACPolicy(FeedForwardPolicy):
     def __init__(self, *args, **kwargs):
@@ -19,11 +17,11 @@ class CustomSACPolicy(FeedForwardPolicy):
                                            layer_norm=False,
                                            feature_extraction="mlp")
 
+rospy.init_node(env_name.replace('-', '_'))
+
 env = gym.make(env_name)
 env = DummyVecEnv([lambda: env])
 
-
-
 model = SAC(CustomSACPolicy, env, verbose=1)
-model.learn(total_timesteps=10000, log_interval=10)
+model.learn(total_timesteps=int(1e4), log_interval=10)
 model.save(env_name)
