@@ -3,12 +3,13 @@ import rospy
 import numpy as np
 import math
 import time
-from math import pi
+import os
 from geometry_msgs.msg import Twist, Point, Pose
 from sensor_msgs.msg import LaserScan
 from nav_msgs.msg import Odometry
 from std_srvs.srv import Empty
 from gym import spaces
+from gym.utils import seeding
 from gym_turtlebot3.envs.mytf import euler_from_quaternion
 from gym_turtlebot3.envs import Respawn
 
@@ -79,6 +80,12 @@ class TurtleBot3Env(gym.Env):
         self.start_time = time.time()
         self.last_step_time = self.start_time
 
+        self.seed()
+
+    def seed(self, seed=None):
+        self.np_random, seed = seeding.np_random(seed)
+        return [seed]
+
     def get_action_space_values(self):
         low = self.min_ang_vel
         high = self.max_ang_vel
@@ -104,11 +111,11 @@ class TurtleBot3Env(gym.Env):
         goal_angle = math.atan2(self.goal_y - self.position.y, self.goal_x - self.position.x)
 
         heading = goal_angle - yaw
-        if heading > pi:
-            heading -= 2 * pi
+        if heading > math.pi:
+            heading -= 2 * math.pi
 
-        elif heading < -pi:
-            heading += 2 * pi
+        elif heading < -math.pi:
+            heading += 2 * math.pi
 
         self.heading = heading
 
@@ -152,11 +159,12 @@ class TurtleBot3Env(gym.Env):
             done = True
 
         if current_distance < self.goalbox_distance:
-            print(f'{time_info}: Goal!!')
-            self.get_goalbox = True
-            if self.respawn_goal.last_index is (self.respawn_goal.len_goal_list - 1):
-                done = True
-                self.episode_finished()
+            if not done:
+                print(f'{time_info}: Goal!!')
+                self.get_goalbox = True
+                if self.respawn_goal.last_index is (self.respawn_goal.len_goal_list - 1):
+                    done = True
+                    self.episode_finished()
             
         return self.get_env_state() + [heading, current_distance], done
 
